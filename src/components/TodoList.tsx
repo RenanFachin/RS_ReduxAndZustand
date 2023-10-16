@@ -1,8 +1,9 @@
-import { useSelector } from 'react-redux'
+
+import { useAppSelector } from '../store'
 
 export function TodoList() {
 
-  const storeTodos = useSelector(store => {
+  const storeTodos = useAppSelector(store => {
     // quais infos vão ser retornadas
     return store.todo // retornando todas as informações (['Fazer café', 'Estudar Redux'])
   })
