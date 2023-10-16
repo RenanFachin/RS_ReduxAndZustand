@@ -11,7 +11,8 @@ const todoSlice = createSlice({
     add: (state, action) => {
       // state é o que já está no estado
       // action contem o type e o payload
-      console.log(state, action)
+      
+      state.push(action.payload.newTodo)
     }
   }
 })
