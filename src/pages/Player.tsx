@@ -14,23 +14,17 @@ export function Player() {
 
   const albums = useAppSelector(state => state.player.discography?.album)
 
-  const video = useAppSelector(state => {
-    const { currentAlbumIndex, currentMusicVideoIndex } = state.player
-
-    const currentVideo =
-      state.player.discography?.album[currentAlbumIndex].music[currentMusicVideoIndex]
-
-    return {
-      currentAlbumIndex,
-      currentVideo
-    }
-  })
+  async function handleLoadingAndSaveDataFromMockApi() {
+    setTimeout(() => {
+      api.get('/discography/1').then(response => {
+        // console.log(response.data)
+        dispatch(start(response.data))
+      })
+    }, 500);
+  }
 
   useEffect(() => {
-    api.get('/discography/1').then(response => {
-      console.log(response.data)
-      // dispatch(start(response.data))
-    })
+    handleLoadingAndSaveDataFromMockApi()
   }, [])
 
   useEffect(() => {
