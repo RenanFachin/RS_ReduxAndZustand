@@ -25,6 +25,7 @@ const exampleState: PlayerState = {
       },
     ],
   },
+  isLoading: false,
   currentAlbumIndex: 0,
   currentMusicVideoIndex: 0
 }

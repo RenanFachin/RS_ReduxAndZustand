@@ -20,6 +20,7 @@ export function Album({ albumIndex, amount, title }: AlbumProps) {
     return state.player.discography?.album[albumIndex].music
   })
 
+
   return (
     <Collapsible.Root className="group" defaultOpen={albumIndex === 0}>
       <Collapsible.Trigger className='flex w-full items-center gap-3 bg-zinc-800 p-4'>
@@ -55,4 +56,4 @@ export function Album({ albumIndex, amount, title }: AlbumProps) {
       </Collapsible.Content>
     </Collapsible.Root>
   )
-}
+} 

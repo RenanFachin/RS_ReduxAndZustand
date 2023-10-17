@@ -15,18 +15,7 @@ export function Player() {
 
   const albums = useAppSelector(state => state.player.discography?.album)
 
-  // async function handleLoadingAndSaveDataFromMockApi() {
-  //   setTimeout(() => {
-  //     api.get('/discography/1').then(response => {
-  //       // console.log(response.data)
-  //       dispatch(start(response.data))
-  //     })
-  //   }, 500);
-  // }
 
-  // useEffect(() => {
-  //   // handleLoadingAndSaveDataFromMockApi()
-  // }, [])
 
   useEffect(() => {
     dispatch(loadAlbum())

@@ -24,27 +24,34 @@ export interface PlayerState {
   discography: Discography | null
   currentAlbumIndex: number
   currentMusicVideoIndex: number
+  isLoading: boolean
 }
 
 const initialState: PlayerState = {
   discography: null,
   currentAlbumIndex: 0,
-  currentMusicVideoIndex: 0
+  currentMusicVideoIndex: 0,
+  isLoading: true
 }
 
 // https://redux-toolkit.js.org/api/createAsyncThunk
 // Forma de ter uma action assíncrona
 export const loadAlbum = createAsyncThunk(
   'player/load',
-  function handleLoadingAndSaveDataFromMockApi() {
-    setTimeout(() => {
-      api.get('/discography/1').then(response => {
-        console.log(response.data)
-        // dispatch(start(response.data))
-      })
-    }, 500);
-  }
-)
+  async function handleLoadingAndSaveDataFromMockApi() {
+    return new Promise((resolve, reject) => {
+      setTimeout(async () => {
+        try {
+          const response = await api.get('/discography/1');
+          resolve(response.data);
+
+        } catch (error) {
+          reject(error);
+        }
+      }, 300);
+    }
+    )
+  })
 
 
 
@@ -53,10 +60,6 @@ export const playerSlice = createSlice({
   initialState,
 
   reducers: {
-    // Action para carregar os dados da API
-    start: (state, action: PayloadAction<Discography>) => {
-      state.discography = action.payload
-    },
     play: (state, action: PayloadAction<[number, number]>) => {
       state.currentAlbumIndex = action.payload[0]
       state.currentMusicVideoIndex = action.payload[1]
@@ -78,13 +81,26 @@ export const playerSlice = createSlice({
         }
       }
     }
+  },
+  extraReducers(builder) {
+    builder.addCase(loadAlbum.pending, (state) => {
+      state.isLoading = true
+    })
+
+    // Executando algo quando a action de fulfilled for executada
+    builder.addCase(loadAlbum.fulfilled, (state, action) => {
+      state.discography = action.payload
+
+      state.isLoading = false
+
+    })
   }
 })
 
 
 export const player = playerSlice.reducer
 
-export const { play, next, start } = playerSlice.actions
+export const { play, next } = playerSlice.actions
 
 
 
