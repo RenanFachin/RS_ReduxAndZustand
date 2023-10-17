@@ -3,23 +3,21 @@ import { MessageCircle } from 'lucide-react'
 import { Header } from '../components/Header'
 import { Video } from '../components/Video'
 import { Album } from '../components/Album'
-import { useAppSelector } from '../store'
 import { useEffect } from 'react'
+import { useStore } from '../zustand-store'
 
 
-import { loadAlbum, useAppDispatch } from '../store/slices/player'
 
 
 export function Player() {
-  const dispatch = useAppDispatch()
-
-  const albums = useAppSelector(state => state.player.discography?.album)
-
+  // carregando dados do zustand
+  const { discography, load} = useStore()
 
 
   useEffect(() => {
-    dispatch(loadAlbum())
+    load()
   }, [])
+
 
   useEffect(() => {
     document.title = `Blink 182`
@@ -50,14 +48,14 @@ export function Player() {
 
           <aside className='w-80 absolute top-0 bottom-0 right-0 border-l border-zinc-800 bg-zinc-900 overflow-y-scroll scrollbar-thin scrollbar-track-zinc-950 scrollbar-thumb-blink-pink divide-y-2 divide-zinc-900'>
             {
-              albums &&
-              albums.map((album, index) => {
+              discography?.album &&
+              discography?.album.map((albumMap, index) => {
                 return (
                   <Album
-                    key={album.id}
+                    key={albumMap.id}
                     albumIndex={index}
-                    title={album.title}
-                    amount={album.music.length}
+                    title={albumMap.title}
+                    amount={albumMap.music.length}
                   />
                 )
               })

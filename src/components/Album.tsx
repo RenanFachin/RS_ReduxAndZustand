@@ -2,8 +2,7 @@ import * as Collapsible from '@radix-ui/react-collapsible';
 
 import { ChevronDown } from "lucide-react";
 import { VideoNameList } from "./VideoNameList";
-import { useAppSelector } from '../store';
-import { play, useAppDispatch } from '../store/slices/player';
+import { useStore } from '../zustand-store';
 
 
 interface AlbumProps {
@@ -14,10 +13,10 @@ interface AlbumProps {
 
 export function Album({ albumIndex, amount, title }: AlbumProps) {
 
-  const dispatch = useAppDispatch()
+  const { play } = useStore()
 
-  const musics = useAppSelector((state) => {
-    return state.player.discography?.album[albumIndex].music
+  const musics = useStore((state) => {
+    return state.discography?.album[albumIndex].music
   })
 
 
@@ -47,7 +46,7 @@ export function Album({ albumIndex, amount, title }: AlbumProps) {
                   key={music.id}
                   title={music.title}
                   duration={music.duration}
-                  onPlay={() => dispatch(play([albumIndex, index]))}
+                  onPlay={() => (play([albumIndex, index]))}
                 />
               )
             })

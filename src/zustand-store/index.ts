@@ -105,3 +105,17 @@ export const useStore = create<PlayerState>((set, get) => {
     }
   }
 })
+
+
+export const useCurrentMusicVideo = () => {
+  return useStore(state => {
+    const { currentAlbumIndex, currentMusicVideoIndex } = state
+
+    const currentAlbum = state.discography?.album[currentAlbumIndex]
+
+    const currentVideo = currentAlbum?.music[currentMusicVideoIndex]
+
+
+    return { currentAlbum, currentVideo }
+  })
+}

@@ -1,10 +1,10 @@
-import { useAppSelector } from "../store"
+import { useStore } from "../zustand-store"
 
 export function Header() {
 
-  const isAlbumLoading = useAppSelector(state => state.player.isLoading)
+  const { isLoading } = useStore()
 
-  if (isAlbumLoading) {
+  if (isLoading) {
     return <h1 className="text-2xl font-bold">Carregando...</h1>
   }
 
