@@ -10,13 +10,17 @@ export function Video() {
     const { currentAlbumIndex, currentMusicVideoIndex } = state.player
 
     const currentVideo =
-      state.player.discography.album[currentAlbumIndex].music[currentMusicVideoIndex]
+      state.player.discography?.album[currentAlbumIndex].music[currentMusicVideoIndex]
 
     return currentVideo
   })
 
   function handlePlayNext(){
     dispatch(next())
+  }
+
+  if(!video){
+    return null
   }
 
   return (

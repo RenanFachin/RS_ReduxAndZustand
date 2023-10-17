@@ -1,13 +1,14 @@
 // https://vitest.dev/guide/
 import { describe, expect, it } from 'vitest'
-import { player as reducer, play, next } from './player'
+import { player as reducer, play, next, PlayerState } from './player'
 
 
-const exampleState = {
+const exampleState: PlayerState = {
   discography: {
+    id: 1,
     album: [
       {
-        id: '1',
+        id: 1,
         title: 'One More Time...',
         music: [
           { id: '7MI3buZedOw', title: 'EDGING', duration: '02:45' },
@@ -15,7 +16,7 @@ const exampleState = {
         ]
       },
       {
-        id: '2',
+        id: 2,
         title: 'Nine',
         music: [
           { id: '4cbSPNZryzo', title: 'Darkside', duration: '03:03' },

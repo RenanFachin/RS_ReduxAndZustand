@@ -17,7 +17,7 @@ export function Album({ albumIndex, amount, title }: AlbumProps) {
   const dispatch = useDispatch()
 
   const musics = useAppSelector((state) => {
-    return state.player.discography.album[albumIndex].music
+    return state.player.discography?.album[albumIndex].music
   })
 
   return (
@@ -38,8 +38,9 @@ export function Album({ albumIndex, amount, title }: AlbumProps) {
       <Collapsible.Content>
         <nav className='relative flex flex-col gap-4 p-6'>
           {
+            musics &&
             musics.map((music, index) => {
-                
+
               return (
                 <VideoNameList
                   key={music.id}

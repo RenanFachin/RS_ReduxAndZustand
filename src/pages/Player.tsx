@@ -6,15 +6,19 @@ import { Album } from '../components/Album'
 import { useAppSelector } from '../store'
 import { useEffect } from 'react'
 import { api } from '../lib/axios'
+import { useDispatch } from 'react-redux'
+import { start } from '../store/slices/player'
 
 export function Player() {
-  const albums = useAppSelector(state => state.player.discography.album)
+  const dispatch = useDispatch()
+
+  const albums = useAppSelector(state => state.player.discography?.album)
 
   const video = useAppSelector(state => {
     const { currentAlbumIndex, currentMusicVideoIndex } = state.player
 
     const currentVideo =
-      state.player.discography.album[currentAlbumIndex].music[currentMusicVideoIndex]
+      state.player.discography?.album[currentAlbumIndex].music[currentMusicVideoIndex]
 
     return {
       currentAlbumIndex,
@@ -23,12 +27,15 @@ export function Player() {
   })
 
   useEffect(() => {
-    api.get('/d')
-  },[])
+    api.get('/discography/1').then(response => {
+      console.log(response.data)
+      // dispatch(start(response.data))
+    })
+  }, [])
 
   useEffect(() => {
-    document.title = ` Blink 182 - ${video.currentVideo.title}`
-  }, [video])
+    document.title = ` Blink 182 `
+  }, [])
 
   return (
     <div className="h-screen bg-zinc-950 text-zinc-50 flex justify-center items-center">
@@ -55,6 +62,7 @@ export function Player() {
 
           <aside className='w-80 absolute top-0 bottom-0 right-0 border-l border-zinc-800 bg-zinc-900 overflow-y-scroll scrollbar-thin scrollbar-track-zinc-950 scrollbar-thumb-blink-pink divide-y-2 divide-zinc-900'>
             {
+              albums &&
               albums.map((album, index) => {
                 return (
                   <Album
