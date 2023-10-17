@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 
 const playerSlice = createSlice({
   name: 'player',
@@ -27,8 +27,7 @@ const playerSlice = createSlice({
           title: 'California',
           music: [
             { id: 'lic0oCDMfwk', title: 'Bored To Death', duration: '04:03' },
-            { id: 'krpm0v_486k', title: 'She is Out Of Her Mind', duration: '02:41' },
-            { id: 'czAKwUT-s_Q', title: 'Home Is Such A Lonely Place', duration: '03:18' },
+            { id: 'czAKwUT-s_Q', title: 'Home Is Such A Lonely Place', duration: '03:18' }
 
           ]
         },
@@ -38,8 +37,7 @@ const playerSlice = createSlice({
           music: [
             { id: 'YpYhGdrknlA', title: 'Up All Night', duration: '03:43' },
             { id: 'CuNSn1z6ric', title: "Heart's All Gone", duration: '03:25' },
-            { id: 'H86730HjLVA', title: 'After Midnight', duration: '04:01' },
-
+            { id: 'H86730HjLVA', title: 'After Midnight', duration: '04:01' }
           ]
         },
         {
@@ -84,13 +82,39 @@ const playerSlice = createSlice({
           music: [
             { id: 'kZs88WWGDoo', title: "M+M's", duration: '02:39' }
           ]
-        },
+        }
       ],
-    }
+    },
+    currentAlbumIndex: 0,
+    currentMusicVideoIndex: 0
   },
 
-  reducers: {}
+  reducers: {
+    play: (state, action: PayloadAction<[number, number]>) => {
+      state.currentAlbumIndex = action.payload[0]
+      state.currentMusicVideoIndex = action.payload[1]
+    },
+    next: (state) => {
+      const nextMusicVideoIndex = state.currentMusicVideoIndex + 1
+      const nextMusicVideo = state.discography.album[state.currentAlbumIndex].music[nextMusicVideoIndex]
+
+      if (nextMusicVideo) {
+        state.currentMusicVideoIndex = nextMusicVideoIndex
+      } else {
+        const nextAlbumIndex = state.currentAlbumIndex + 1
+
+        const nextAlbum = state.discography.album[nextAlbumIndex]
+
+        if (nextAlbum) {
+          state.currentAlbumIndex = nextAlbumIndex
+          state.currentMusicVideoIndex = 0
+        }
+      }
+    }
+  }
 })
 
 
 export const player = playerSlice.reducer
+
+export const { play, next } = playerSlice.actions

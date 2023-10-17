@@ -3,6 +3,8 @@ import * as Collapsible from '@radix-ui/react-collapsible';
 import { ChevronDown } from "lucide-react";
 import { VideoNameList } from "./VideoNameList";
 import { useAppSelector } from '../store';
+import { play } from '../store/slices/player';
+import { useDispatch } from 'react-redux';
 
 interface AlbumProps {
   albumIndex: number
@@ -12,12 +14,14 @@ interface AlbumProps {
 
 export function Album({ albumIndex, amount, title }: AlbumProps) {
 
+  const dispatch = useDispatch()
+
   const musics = useAppSelector((state) => {
     return state.player.discography.album[albumIndex].music
   })
 
   return (
-    <Collapsible.Root className="group">
+    <Collapsible.Root className="group" defaultOpen={albumIndex === 0}>
       <Collapsible.Trigger className='flex w-full items-center gap-3 bg-zinc-800 p-4'>
         <div className='flex h-10 w-10 rounded-full items-center justify-center bg-blink-pink text-xs'>
           {albumIndex + 1}
@@ -34,12 +38,14 @@ export function Album({ albumIndex, amount, title }: AlbumProps) {
       <Collapsible.Content>
         <nav className='relative flex flex-col gap-4 p-6'>
           {
-            musics.map(music => {
+            musics.map((music, index) => {
+                
               return (
                 <VideoNameList
                   key={music.id}
                   title={music.title}
                   duration={music.duration}
+                  onPlay={() => dispatch(play([albumIndex, index]))}
                 />
               )
             })
