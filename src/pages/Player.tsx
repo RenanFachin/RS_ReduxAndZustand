@@ -5,30 +5,35 @@ import { Video } from '../components/Video'
 import { Album } from '../components/Album'
 import { useAppSelector } from '../store'
 import { useEffect } from 'react'
-import { api } from '../lib/axios'
-import { useDispatch } from 'react-redux'
-import { start } from '../store/slices/player'
+
+
+import { loadAlbum, useAppDispatch } from '../store/slices/player'
+
 
 export function Player() {
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
 
   const albums = useAppSelector(state => state.player.discography?.album)
 
-  async function handleLoadingAndSaveDataFromMockApi() {
-    setTimeout(() => {
-      api.get('/discography/1').then(response => {
-        // console.log(response.data)
-        dispatch(start(response.data))
-      })
-    }, 500);
-  }
+  // async function handleLoadingAndSaveDataFromMockApi() {
+  //   setTimeout(() => {
+  //     api.get('/discography/1').then(response => {
+  //       // console.log(response.data)
+  //       dispatch(start(response.data))
+  //     })
+  //   }, 500);
+  // }
+
+  // useEffect(() => {
+  //   // handleLoadingAndSaveDataFromMockApi()
+  // }, [])
 
   useEffect(() => {
-    handleLoadingAndSaveDataFromMockApi()
+    dispatch(loadAlbum())
   }, [])
 
   useEffect(() => {
-    document.title = ` Blink 182 `
+    document.title = `Blink 182`
   }, [])
 
   return (

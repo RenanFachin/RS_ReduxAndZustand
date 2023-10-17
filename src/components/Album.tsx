@@ -3,8 +3,8 @@ import * as Collapsible from '@radix-ui/react-collapsible';
 import { ChevronDown } from "lucide-react";
 import { VideoNameList } from "./VideoNameList";
 import { useAppSelector } from '../store';
-import { play } from '../store/slices/player';
-import { useDispatch } from 'react-redux';
+import { play, useAppDispatch } from '../store/slices/player';
+
 
 interface AlbumProps {
   albumIndex: number
@@ -14,7 +14,7 @@ interface AlbumProps {
 
 export function Album({ albumIndex, amount, title }: AlbumProps) {
 
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
 
   const musics = useAppSelector((state) => {
     return state.player.discography?.album[albumIndex].music

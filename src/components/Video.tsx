@@ -1,10 +1,10 @@
 import ReactPlayer from 'react-player'
 import { useAppSelector } from '../store'
-import { useDispatch } from 'react-redux'
-import { next } from '../store/slices/player'
+
+import { next, useAppDispatch } from '../store/slices/player'
 
 export function Video() {
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
 
   const video = useAppSelector(state => {
     const { currentAlbumIndex, currentMusicVideoIndex } = state.player

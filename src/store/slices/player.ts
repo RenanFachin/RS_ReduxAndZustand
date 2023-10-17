@@ -1,4 +1,7 @@
-import { PayloadAction, createSlice } from '@reduxjs/toolkit'
+import { PayloadAction, createSlice, createAsyncThunk } from '@reduxjs/toolkit'
+import { api } from '../../lib/axios';
+import { store } from '..';
+import { useDispatch } from 'react-redux';
 
 interface Music {
   id: string;
@@ -29,13 +32,29 @@ const initialState: PlayerState = {
   currentMusicVideoIndex: 0
 }
 
+// https://redux-toolkit.js.org/api/createAsyncThunk
+// Forma de ter uma action assíncrona
+export const loadAlbum = createAsyncThunk(
+  'player/load',
+  function handleLoadingAndSaveDataFromMockApi() {
+    setTimeout(() => {
+      api.get('/discography/1').then(response => {
+        console.log(response.data)
+        // dispatch(start(response.data))
+      })
+    }, 500);
+  }
+)
+
+
+
 export const playerSlice = createSlice({
   name: 'player',
   initialState,
 
   reducers: {
     // Action para carregar os dados da API
-    start : (state, action: PayloadAction<Discography>) => {
+    start: (state, action: PayloadAction<Discography>) => {
       state.discography = action.payload
     },
     play: (state, action: PayloadAction<[number, number]>) => {
@@ -66,3 +85,8 @@ export const playerSlice = createSlice({
 export const player = playerSlice.reducer
 
 export const { play, next, start } = playerSlice.actions
+
+
+
+export type AppDispatch = typeof store.dispatch
+export const useAppDispatch: () => AppDispatch = useDispatch
