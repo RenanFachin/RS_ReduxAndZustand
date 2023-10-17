@@ -4,8 +4,18 @@ export default {
     './src/**/*.tsx'
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        blink: {
+          'pink': '#E50085',
+          'cyan': '#2DC5AE'
+        }
+
+      }
+    },
   },
-  plugins: [],
+  plugins: [
+    require('tailwind-scrollbar'),
+  ],
 }
 
