@@ -5,6 +5,7 @@ import { Video } from '../components/Video'
 import { Album } from '../components/Album'
 import { useAppSelector } from '../store'
 import { useEffect } from 'react'
+import { api } from '../lib/axios'
 
 export function Player() {
   const albums = useAppSelector(state => state.player.discography.album)
@@ -20,6 +21,10 @@ export function Player() {
       currentVideo
     }
   })
+
+  useEffect(() => {
+    api.get('/d')
+  },[])
 
   useEffect(() => {
     document.title = ` Blink 182 - ${video.currentVideo.title}`

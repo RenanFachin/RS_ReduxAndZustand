@@ -1,5 +1,8 @@
 import axios from "axios"
 
 export const api = axios.create({
-  baseURL: 'http://locahost:3000',
+  baseURL: 'https://my-json-server.typicode.com/RenanFachin/RS_ReduxAndZustand/discography',
 })
+
+
+// https://my-json-server.typicode.com/
