@@ -3,10 +3,13 @@
 import { configureStore } from '@reduxjs/toolkit'
 
 // https://react-redux.js.org/using-react-redux/usage-with-typescript
-import {useSelector, TypedUseSelectorHook} from 'react-redux'
+import { useSelector, TypedUseSelectorHook } from 'react-redux'
+import { player } from './slices/player'
 
 export const store = configureStore({
-  reducer: {}
+  reducer: {
+    player: player,
+  }
 })
 
 // Integração com TS

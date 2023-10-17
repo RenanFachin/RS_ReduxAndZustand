@@ -1,10 +1,14 @@
-import { MessageCircle, ChevronDown, } from 'lucide-react'
+import { MessageCircle } from 'lucide-react'
 
 import { Header } from '../components/Header'
 import { Video } from '../components/Video'
 import { Album } from '../components/Album'
+import { useAppSelector } from '../store'
 
 export function Player() {
+  const albums = useAppSelector(state => state.player.discography.album)
+
+
   return (
     <div className="h-screen bg-zinc-950 text-zinc-50 flex justify-center items-center">
       <div className="flex w-[1100px] flex-col gap-6">
@@ -28,8 +32,20 @@ export function Player() {
             <Video />
           </div>
 
-          <aside className='w-80 absolute top-0 bottom-0 right-0 border-l border-zinc-800 bg-zinc-900 overflow-y-scroll scrollbar-thin scrollbar-track-zinc-950 scrollbar-thumb-zinc-800 divide-y-2 divide-zinc-900'>
-            <Album albumIndex={0} title="One More Time" amount={3}/>
+          <aside className='w-80 absolute top-0 bottom-0 right-0 border-l border-zinc-800 bg-zinc-900 overflow-y-scroll scrollbar-thin scrollbar-track-zinc-950 scrollbar-thumb-blink-pink divide-y-2 divide-zinc-900'>
+            {
+              albums.map((album, index) => {
+                return (
+                  <Album
+                    key={album.id}
+                    albumIndex={index}
+                    title={album.title}
+                    amount={album.music.length}
+                  />
+                )
+              })
+            }
+
           </aside>
         </main>
 
