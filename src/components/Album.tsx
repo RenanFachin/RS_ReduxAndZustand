@@ -13,7 +13,7 @@ interface AlbumProps {
 
 export function Album({ albumIndex, amount, title }: AlbumProps) {
 
-  const { play } = useStore()
+  const play = useStore(store => store.play)
 
   const musics = useStore((state) => {
     return state.discography?.album[albumIndex].music

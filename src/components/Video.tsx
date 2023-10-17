@@ -16,10 +16,15 @@ export function Video() {
   })
 
 
-  const {isLoading, next} = useStore()
+  const { isLoading, next } = useStore(store => {
+    return {
+      isLoading: store.isLoading,
+      next: store.next
+    }
+  })
 
   function handlePlayNext() {
-    (next())
+    next()
   }
 
 

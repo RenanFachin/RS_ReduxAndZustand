@@ -11,7 +11,12 @@ import { useStore } from '../zustand-store'
 
 export function Player() {
   // carregando dados do zustand
-  const { discography, load} = useStore()
+  const { discography, load } = useStore(store => {
+    return {
+      discography: store.discography,
+      load: store.load
+    }
+  })
 
 
   useEffect(() => {
