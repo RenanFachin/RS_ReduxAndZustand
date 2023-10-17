@@ -4,10 +4,26 @@ import { Header } from '../components/Header'
 import { Video } from '../components/Video'
 import { Album } from '../components/Album'
 import { useAppSelector } from '../store'
+import { useEffect } from 'react'
 
 export function Player() {
   const albums = useAppSelector(state => state.player.discography.album)
 
+  const video = useAppSelector(state => {
+    const { currentAlbumIndex, currentMusicVideoIndex } = state.player
+
+    const currentVideo =
+      state.player.discography.album[currentAlbumIndex].music[currentMusicVideoIndex]
+
+    return {
+      currentAlbumIndex,
+      currentVideo
+    }
+  })
+
+  useEffect(() => {
+    document.title = ` Blink 182 - ${video.currentVideo.title}`
+  }, [video])
 
   return (
     <div className="h-screen bg-zinc-950 text-zinc-50 flex justify-center items-center">
