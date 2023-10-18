@@ -29,10 +29,10 @@ export function Player() {
   }, [])
 
   return (
-    <div className="h-screen bg-zinc-950 text-zinc-50 flex justify-center items-center p-8 md:p-0">
+    <div className="h-full md:h-screen bg-zinc-950 text-zinc-50 flex justify-center items-center p-8 md:p-0">
       <div className="flex w-[1100px] flex-col gap-6">
 
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between my-10 md:my-0">
           {/* Header */}
           <Header />
 
